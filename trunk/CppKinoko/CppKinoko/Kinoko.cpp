@@ -1,10 +1,77 @@
+// CppKinoko
+// Copyright (C) 2010 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <time.h>
 #include "Kinoko.h"
-#include "KinokoResult.cpp"
 
 
 Kinoko::Kinoko(void)
 {
+}
+
+Kinoko::~Kinoko(void)
+{
+	if (result != NULL)
+		delete result;
+}
+
+
+/*
+--------------------------------------------------------------------------------
+The list of listeners for the AfterTaskRun event.
+--------------------------------------------------------------------------------
+*/
+private List<AfterTaskRunEventListener> afterTaskRunEventListeners = new ArrayList<AfterTaskRunEventListener>();
+
+/*
+--------------------------------------------------------------------------------
+Adds a new listener for the AfterTaskRun event.
+--------------------------------------------------------------------------------
+*/
+public synchronized void addAfterTaskRunEventListener(AfterTaskRunEventListener listener) {
+	afterTaskRunEventListeners.add(listener);
+}
+
+	/*
+	--------------------------------------------------------------------------------
+	Removes a listener from the AfterTaskRun event.
+	--------------------------------------------------------------------------------
+	*/
+	public synchronized void removeAfterTaskRunEventListener(AfterTaskRunEventListener listener) {
+		afterTaskRunEventListeners.remove(listener);
+	}
+
+	/**
+	 * Raises the AfterTaskRun event.
+	 * 
+	 * @param event
+	 *            The event data that will be sent to all the listeners.
+	 */
+	private synchronized void fireAfterTaskRunEvent(AfterTaskRunEventObject event) {
+		Iterator<AfterTaskRunEventListener> i = afterTaskRunEventListeners.iterator();
+		while (i.hasNext()) {
+			i.next().handleEvent(event);
+		}
+	}
+
+
+
+void Kinoko::SetTaskRunCount(int value)
+{
+	taskRunCount = value;
 }
 
 void Kinoko::SetTask(void (*task)())
@@ -12,15 +79,9 @@ void Kinoko::SetTask(void (*task)())
 	this->task = task;
 }
 
-Kinoko::~Kinoko(void)
-{
-	if (result != NULL)
-		DestroyKinokoResult(result);
-}
-
 void Kinoko::Run(void)
 {
-	KinokoResult *result = CreateKinokoResult(taskRunCount);
+	KinokoResult *result = new KinokoResult(taskRunCount);
 
 	// The Task is run multiple times and then an avarage is calculated.
 
@@ -39,7 +100,7 @@ void Kinoko::Run(void)
 		double intervalMilli = (t2 - t1) / (double)CLOCKS_PER_SEC * 1000;
 
 		// Store the time interval.
-		result->times[i] = intervalMilli;
+		result->AddValue(intervalMilli);
 
 		// Announce that the Task was run.
 		/*if (afterTaskRun != NULL)
@@ -47,7 +108,7 @@ void Kinoko::Run(void)
 	}
 
 	// Calculate the average.
-	CalculateAverage(result);
+	result->Calculate();
 
 	this->result = result;
 }
@@ -55,29 +116,4 @@ void Kinoko::Run(void)
 KinokoResult* Kinoko::GetResult()
 {
 	return result;
-}
-
-KinokoResult* Kinoko::CreateKinokoResult(int count)
-{
-	KinokoResult result;
-	result.times = new double[count];
-	result.count = count;
-	return &result;
-}
-
-void Kinoko::DestroyKinokoResult(KinokoResult *result)
-{
-	delete[] result->times;
-}
-
-void Kinoko::CalculateAverage(KinokoResult *result)
-{
-	double sum = 0;
-	
-	for (int i = 0; i < result->count; i++)
-	{
-		sum += result->times[i];
-	}
-
-	result->average = sum / (double)result->count;
 }
