@@ -14,41 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <stdio.h>
-#include "KinokoResult.h"
+#pragma once
 
-KinokoResult::KinokoResult(int count)
+class KinokoResult
 {
-	times = new double[count];
-	this->count = count;
-	actualIndex = 0;
-	average = -1;
-}
+private:
+	double *times;
+	int count;
+	int actualIndex;
+	double average;
 
-KinokoResult::~KinokoResult(void)
-{
-	if(times != NULL)
-		delete[] times;
-}
+public:
+	KinokoResult(int count);
+	~KinokoResult(void);
 
-void KinokoResult::AddValue(double time)
-{
-	times[actualIndex++] = time;
-}
-
-double KinokoResult::GetAverage()
-{
-	return average;
-}
-
-void KinokoResult::Calculate()
-{
-	double sum = 0;
-	
-	for (int i = 0; i < count; i++)
-	{
-		sum += times[i];
-	}
-
-	average = sum / (double)count;
-}
+	void AddValue(double time);
+	double GetAverage();
+	void Calculate();
+};

@@ -1,22 +1,32 @@
+// CppKinoko
+// Copyright (C) 2010 Dust in the Wind
+// 
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #include <stdio.h>
 #include <time.h>
 #include "windows.h"
 #include "Kinoko.h"
 
-#define CLOCKS_PER_MILISEC CLOCKS_PER_SEC * 1000
-
 void Task();
 void Pause();
-double TestRunner(void (*Task)(int), int count, int testRepeateCount);
-double Avarage(double values[], int count);
 
 int taskRunCount = 10;
-int sleepMilli = 300;
+int sleepMilli = 200;
 
 void main ()
 {
-	int count = 100000000;
-
 	printf("CppKinoko usage example\n");
 	printf("===============================================================================\n");
 	printf("Running a fake task that junst sleeps for %d milliseconds.\n", sleepMilli);
@@ -25,36 +35,11 @@ void main ()
 
 	Kinoko *kinoko = new Kinoko();
 	kinoko->SetTask(&Task);
+	kinoko->SetTaskRunCount(taskRunCount);
 	kinoko->Run();
-
-	//double milis = TestRunner(&Task2, count, 10);
 	
-	printf("Avarage time: %.2f milisec\n", kinoko->GetResult()->average);
+	printf("Avarage time: %.2f milisec\n", kinoko->GetResult()->GetAverage());
 	Pause();
-}
-
-double TestRunner(void (*Task)(int), int count, int testRepeateCount)
-{
-	double* times = new double[testRepeateCount];
-
-	for (int i = 0; i < testRepeateCount; i++)
-	{
-		printf("Running: %d", i);
-
-		clock_t t1 = clock();
-		Task(count);
-		clock_t t2 = clock();
-
-		times[i] = (t2-t1) / (double)CLOCKS_PER_MILISEC;
-		
-		printf(" - %.2f\n", times[i]);
-	}
-
-	printf("\n");
-
-	double avarage =  Avarage(times, testRepeateCount);
-	delete[] times;
-	return avarage;
 }
 
 void Task()
@@ -76,16 +61,4 @@ void Pause()
 	printf("\nPress enter to continue...");
 	getchar();
 	printf("\n");
-}
-
-double Avarage(double values[], int count)
-{
-	double sum = 0;
-
-	for (int i = 0; i < count; i++)
-	{
-		sum += values[i];
-	}
-
-	return sum / count;
 }

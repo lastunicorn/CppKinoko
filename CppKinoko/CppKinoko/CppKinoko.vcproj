@@ -198,6 +198,10 @@
 				RelativePath=".\Kinoko.h"
 				>
 			</File>
+			<File
+				RelativePath=".\KinokoResult.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
