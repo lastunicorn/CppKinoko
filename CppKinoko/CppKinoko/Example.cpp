@@ -1,22 +1,35 @@
 #include <stdio.h>
 #include <time.h>
 #include "windows.h"
+#include "Kinoko.h"
 
 #define CLOCKS_PER_MILISEC CLOCKS_PER_SEC * 1000
 
-void Task1(int count);
-void Task2(int count);
+void Task();
 void Pause();
 double TestRunner(void (*Task)(int), int count, int testRepeateCount);
 double Avarage(double values[], int count);
+
+int taskRunCount = 10;
+int sleepMilli = 300;
 
 void main ()
 {
 	int count = 100000000;
 
-	double milis = TestRunner(&Task2, count, 10);
+	printf("CppKinoko usage example\n");
+	printf("===============================================================================\n");
+	printf("Running a fake task that junst sleeps for %d milliseconds.\n", sleepMilli);
+	printf("The test is repeated %d times and the avarage time is displayed.\n", taskRunCount);
+	printf("\n");
+
+	Kinoko *kinoko = new Kinoko();
+	kinoko->SetTask(&Task);
+	kinoko->Run();
+
+	//double milis = TestRunner(&Task2, count, 10);
 	
-	printf("Avarage time: %.2f milisec\n", milis);
+	printf("Avarage time: %.2f milisec\n", kinoko->GetResult()->average);
 	Pause();
 }
 
@@ -44,26 +57,18 @@ double TestRunner(void (*Task)(int), int count, int testRepeateCount)
 	return avarage;
 }
 
-void Task1(int count)
+void Task()
 {
-	int a = 0;
+	Sleep(sleepMilli);
 
-	for (int i = 0; i < count; i++)
-	{
-		a++;
-	}
-}
-
-void Task2(int count)
-{
-	int* a = new int[count];
+	/*int* a = new int[count];
 
 	for (int register i = 0; i < count; i++)
 	{
 		a[i] = i;
 	}
 
-	delete[] a;
+	delete[] a;*/
 }
 
 void Pause()

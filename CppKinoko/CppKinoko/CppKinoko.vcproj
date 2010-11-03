@@ -173,17 +173,21 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Kinoko.cpp"
+				RelativePath=".\Example.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\KinokoResult.cpp"
+			<Filter
+				Name="Kinoko"
 				>
-			</File>
-			<File
-				RelativePath=".\Program.cpp"
-				>
-			</File>
+				<File
+					RelativePath=".\Kinoko.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\KinokoResult.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

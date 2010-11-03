@@ -7,6 +7,11 @@ Kinoko::Kinoko(void)
 {
 }
 
+void Kinoko::SetTask(void (*task)())
+{
+	this->task = task;
+}
+
 Kinoko::~Kinoko(void)
 {
 	if (result != NULL)
@@ -15,26 +20,26 @@ Kinoko::~Kinoko(void)
 
 void Kinoko::Run(void)
 {
-	KinokoResult result = CreateKinokoResult(taskRunCount);
-	clock_t t1;
-	clock_t t2;
+	KinokoResult *result = CreateKinokoResult(taskRunCount);
 
 	// The Task is run multiple times and then an avarage is calculated.
 
-	int i;
-	for (i = 0; i < taskRunCount; i++)
+	for (int i = 0; i < taskRunCount; i++)
 	{
 		// Announce that the Task is about to be run.
 		/*if (beforeTaskRun != NULL)
 			beforeTaskRun(i);*/
 
 		// Run the Task.
-		t1 = clock();
+		clock_t t1 = clock();
 		task();
-		t2 = clock();
+		clock_t t2 = clock();
 
-		// Calculate and store the time in which the task run.
-		result.times[i] = (t2-t1) / (double)CLOCKS_PER_SEC * 1000;
+		// Calculate the time that was necessary to run the task.
+		double intervalMilli = (t2 - t1) / (double)CLOCKS_PER_SEC * 1000;
+
+		// Store the time interval.
+		result->times[i] = intervalMilli;
 
 		// Announce that the Task was run.
 		/*if (afterTaskRun != NULL)
@@ -42,17 +47,22 @@ void Kinoko::Run(void)
 	}
 
 	// Calculate the average.
-	CalculateAverage(&result);
+	CalculateAverage(result);
 
-	this->result = &result;
+	this->result = result;
 }
 
-KinokoResult Kinoko::CreateKinokoResult(int count)
+KinokoResult* Kinoko::GetResult()
+{
+	return result;
+}
+
+KinokoResult* Kinoko::CreateKinokoResult(int count)
 {
 	KinokoResult result;
 	result.times = new double[count];
 	result.count = count;
-	return result;
+	return &result;
 }
 
 void Kinoko::DestroyKinokoResult(KinokoResult *result)
@@ -63,9 +73,8 @@ void Kinoko::DestroyKinokoResult(KinokoResult *result)
 void Kinoko::CalculateAverage(KinokoResult *result)
 {
 	double sum = 0;
-	int i;
-
-	for (i = 0; i < result->count; i++)
+	
+	for (int i = 0; i < result->count; i++)
 	{
 		sum += result->times[i];
 	}
