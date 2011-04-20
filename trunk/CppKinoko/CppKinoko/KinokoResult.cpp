@@ -36,6 +36,11 @@ void KinokoResult::AddValue(double time)
 	times[actualIndex++] = time;
 }
 
+double KinokoResult::GetValue(int index)
+{
+	return times[index];
+}
+
 double KinokoResult::GetAverage()
 {
 	return average;
