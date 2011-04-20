@@ -42,7 +42,7 @@ void Kinoko::Run(void)
 {
 	KinokoResult *result = new KinokoResult(taskRunCount);
 
-	// The Task is run multiple times and then an avarage is calculated.
+	// The Task is run multiple times and then an average is calculated.
 
 	for (int i = 0; i < taskRunCount; i++)
 	{
