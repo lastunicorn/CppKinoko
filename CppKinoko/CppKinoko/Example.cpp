@@ -21,6 +21,8 @@
 
 void Task();
 void Pause();
+void Kinoko_BeforeTaskRun(int stepIndex);
+void Kinoko_AfterTaskRun(int stepIndex, double time);
 
 int taskRunCount = 10;
 int sleepMilli = 200;
@@ -36,6 +38,8 @@ void main ()
 	Kinoko *kinoko = new Kinoko();
 	kinoko->SetTask(&Task);
 	kinoko->SetTaskRunCount(taskRunCount);
+	kinoko->beforeTaskRun = &Kinoko_BeforeTaskRun;
+	kinoko->afterTaskRun = &Kinoko_AfterTaskRun;
 	kinoko->Run();
 	
 	printf("Avarage time: %.2f milisec\n", kinoko->GetResult()->GetAverage());
@@ -56,6 +60,31 @@ void Task()
 	delete[] a;*/
 }
 
+/*
+--------------------------------------------------------------------------------
+Function called every time before the task is run.
+--------------------------------------------------------------------------------
+*/
+void Kinoko_BeforeTaskRun(int stepIndex)
+{
+	printf("Running: %d", stepIndex);
+}
+
+/*
+--------------------------------------------------------------------------------
+Function called every time after the task is run.
+--------------------------------------------------------------------------------
+*/
+void Kinoko_AfterTaskRun(int stepIndex, double time)
+{
+	printf(" - %.2f\n", time);
+}
+
+/*
+--------------------------------------------------------------------------------
+Pauses the console until the user presses a key.
+--------------------------------------------------------------------------------
+*/
 void Pause()
 {
 	printf("\nPress enter to continue...");

@@ -29,6 +29,7 @@ public:
 	~KinokoResult(void);
 
 	void AddValue(double time);
+	double GetValue(int index);
 	double GetAverage();
 	void Calculate();
 };

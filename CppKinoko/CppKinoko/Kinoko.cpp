@@ -28,47 +28,6 @@ Kinoko::~Kinoko(void)
 		delete result;
 }
 
-
-/*
---------------------------------------------------------------------------------
-The list of listeners for the AfterTaskRun event.
---------------------------------------------------------------------------------
-*/
-private List<AfterTaskRunEventListener> afterTaskRunEventListeners = new ArrayList<AfterTaskRunEventListener>();
-
-/*
---------------------------------------------------------------------------------
-Adds a new listener for the AfterTaskRun event.
---------------------------------------------------------------------------------
-*/
-public synchronized void addAfterTaskRunEventListener(AfterTaskRunEventListener listener) {
-	afterTaskRunEventListeners.add(listener);
-}
-
-	/*
-	--------------------------------------------------------------------------------
-	Removes a listener from the AfterTaskRun event.
-	--------------------------------------------------------------------------------
-	*/
-	public synchronized void removeAfterTaskRunEventListener(AfterTaskRunEventListener listener) {
-		afterTaskRunEventListeners.remove(listener);
-	}
-
-	/**
-	 * Raises the AfterTaskRun event.
-	 * 
-	 * @param event
-	 *            The event data that will be sent to all the listeners.
-	 */
-	private synchronized void fireAfterTaskRunEvent(AfterTaskRunEventObject event) {
-		Iterator<AfterTaskRunEventListener> i = afterTaskRunEventListeners.iterator();
-		while (i.hasNext()) {
-			i.next().handleEvent(event);
-		}
-	}
-
-
-
 void Kinoko::SetTaskRunCount(int value)
 {
 	taskRunCount = value;
@@ -88,8 +47,8 @@ void Kinoko::Run(void)
 	for (int i = 0; i < taskRunCount; i++)
 	{
 		// Announce that the Task is about to be run.
-		/*if (beforeTaskRun != NULL)
-			beforeTaskRun(i);*/
+		if (beforeTaskRun != NULL)
+			beforeTaskRun(i);
 
 		// Run the Task.
 		clock_t t1 = clock();
@@ -103,8 +62,8 @@ void Kinoko::Run(void)
 		result->AddValue(intervalMilli);
 
 		// Announce that the Task was run.
-		/*if (afterTaskRun != NULL)
-			afterTaskRun(i, result.times[i]);*/
+		if (afterTaskRun != NULL)
+			afterTaskRun(i, result->GetValue(i));
 	}
 
 	// Calculate the average.

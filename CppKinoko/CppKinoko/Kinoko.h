@@ -28,6 +28,9 @@ private:
 public:
 	Kinoko(void);
 	~Kinoko(void);
+	
+	void (*beforeTaskRun)(int);
+	void (*afterTaskRun)(int, double);
 
 	void SetTaskRunCount(int value);
 	void SetTask(void (*task)());
