@@ -49,15 +49,6 @@ void main ()
 void Task()
 {
 	Sleep(sleepMilli);
-
-	/*int* a = new int[count];
-
-	for (int register i = 0; i < count; i++)
-	{
-		a[i] = i;
-	}
-
-	delete[] a;*/
 }
 
 /*
