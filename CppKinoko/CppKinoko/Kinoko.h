@@ -16,9 +16,15 @@
 
 #pragma once
 
+#ifdef CPPKINOKO_EXPORTS
+	#define CPPKINOKO_API __declspec(dllexport)
+#else
+	#define CPPKINOKO_API __declspec(dllimport)
+#endif
+
 #include "KinokoResult.h"
 
-class Kinoko
+class CPPKINOKO_API Kinoko
 {
 private:
 	int taskRunCount;

@@ -1,0 +1,4 @@
+LIBRARY CppKinoko
+;DESCRIPTION "CppKinoko"
+EXPORTS
+	Kinoko::SetTaskRunCount

@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppKinoko", "CppKinoko\CppKinoko.vcproj", "{FE47C38A-6C20-41AD-914A-6B9E81DE0D78}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppKinoko.Example", "CppKinoko.Example\CppKinoko.Example.vcproj", "{996B29D0-9D07-47A5-BD49-AB82A01D994F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{FE47C38A-6C20-41AD-914A-6B9E81DE0D78}.Debug|Win32.Build.0 = Debug|Win32
 		{FE47C38A-6C20-41AD-914A-6B9E81DE0D78}.Release|Win32.ActiveCfg = Release|Win32
 		{FE47C38A-6C20-41AD-914A-6B9E81DE0D78}.Release|Win32.Build.0 = Release|Win32
+		{996B29D0-9D07-47A5-BD49-AB82A01D994F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{996B29D0-9D07-47A5-BD49-AB82A01D994F}.Debug|Win32.Build.0 = Debug|Win32
+		{996B29D0-9D07-47A5-BD49-AB82A01D994F}.Release|Win32.ActiveCfg = Release|Win32
+		{996B29D0-9D07-47A5-BD49-AB82A01D994F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

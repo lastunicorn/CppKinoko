@@ -16,7 +16,13 @@
 
 #pragma once
 
-class KinokoResult
+#ifdef CPPKINOKO_EXPORTS
+	#define CPPKINOKO_API __declspec(dllexport)
+#else
+	#define CPPKINOKO_API __declspec(dllimport)
+#endif
+
+class CPPKINOKO_API KinokoResult
 {
 private:
 	double *times;
