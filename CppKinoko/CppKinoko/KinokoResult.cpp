@@ -25,11 +25,11 @@ measurements to store.
 --------------------------------------------------------------------------------
 */
 KinokoResult::KinokoResult(int count)
+    : times(new double[count])
+    , count(count)
+    , actualIndex(0)
+    , average(-1)
 {
-	times = new double[count];
-	this->count = count;
-	actualIndex = 0;
-	average = -1;
 }
 
 /*
