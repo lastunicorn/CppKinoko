@@ -17,6 +17,13 @@
 #include <stdio.h>
 #include "KinokoResult.h"
 
+
+/*
+--------------------------------------------------------------------------------
+Initializes a new instance of the KinokoResult class with the number of
+measurements to store.
+--------------------------------------------------------------------------------
+*/
 KinokoResult::KinokoResult(int count)
 {
 	times = new double[count];
@@ -25,27 +32,52 @@ KinokoResult::KinokoResult(int count)
 	average = -1;
 }
 
+/*
+--------------------------------------------------------------------------------
+Releases the memory used by the current instance of the KinokoResult class.
+--------------------------------------------------------------------------------
+*/
 KinokoResult::~KinokoResult(void)
 {
 	if(times != NULL)
 		delete[] times;
 }
 
+/*
+--------------------------------------------------------------------------------
+Adds a new time measurement to the list of time measurements.
+--------------------------------------------------------------------------------
+*/
 void KinokoResult::AddValue(double time)
 {
 	times[actualIndex++] = time;
 }
 
+/*
+--------------------------------------------------------------------------------
+Gets the time measurement at the specified index.
+--------------------------------------------------------------------------------
+*/
 double KinokoResult::GetValue(int index)
 {
 	return times[index];
 }
 
+/*
+--------------------------------------------------------------------------------
+Gets the average value in miliseconds of the time measurements.
+--------------------------------------------------------------------------------
+*/
 double KinokoResult::GetAverage()
 {
 	return average;
 }
 
+/*
+--------------------------------------------------------------------------------
+Calculates all usefull values from the measured data.
+--------------------------------------------------------------------------------
+*/
 void KinokoResult::Calculate()
 {
 	double sum = 0;

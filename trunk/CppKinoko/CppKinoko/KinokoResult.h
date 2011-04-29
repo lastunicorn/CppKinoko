@@ -22,6 +22,11 @@
 	#define CPPKINOKO_API __declspec(dllimport)
 #endif
 
+/*
+--------------------------------------------------------------------------------
+Contains the measurements taken by Kinoko after it runs the task.
+--------------------------------------------------------------------------------
+*/
 class CPPKINOKO_API KinokoResult
 {
 private:
