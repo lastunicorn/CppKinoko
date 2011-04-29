@@ -30,11 +30,11 @@ Measures the time necessary for a task to run. The task is run multiple times
 and an average is calculated.
 --------------------------------------------------------------------------------
 */
-class CPPKINOKO_API Kinoko
+class /*CPPKINOKO_API*/ Kinoko
 {
 private:
-	int taskRunCount;
-	void (*task)();
+	int          taskRunCount;
+	void         (*task)();
 	KinokoResult *result;
 
 public:
@@ -44,8 +44,18 @@ public:
 	void (*beforeTaskRun)(int);
 	void (*afterTaskRun)(int, double);
 
-	void SetTaskRunCount(int value);
-	void SetTask(void (*task)());
-	void Run(void);
-	KinokoResult* GetResult();
+	virtual void SetTaskRunCount(int value);
+	virtual void SetTask(void (*task)());
+	virtual void Run(void);
+	virtual KinokoResult* GetResult();
 };
+
+#ifdef __cplusplus
+extern "C"{
+#endif
+
+    Kinoko* createKinoko(void);
+
+#ifdef __cplusplus
+}//extern "C"{
+#endif

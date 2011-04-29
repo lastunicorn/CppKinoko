@@ -30,17 +30,17 @@ Contains the measurements taken by Kinoko after it runs the task.
 class CPPKINOKO_API KinokoResult
 {
 private:
-	double *times;
-	int count;
-	int actualIndex;
+	double*times;
+	int    count;
+	int    actualIndex;
 	double average;
 
 public:
 	KinokoResult(int count);
 	~KinokoResult(void);
 
-	void AddValue(double time);
-	double GetValue(int index);
-	double GetAverage();
-	void Calculate();
+	virtual void AddValue(double time);
+	virtual double GetValue(int index);
+	virtual double GetAverage();
+	virtual void Calculate();
 };

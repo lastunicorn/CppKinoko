@@ -18,6 +18,7 @@
 #include <time.h>
 #include "windows.h"
 #include "Kinoko.h"
+#include "KinokoResult.h"
 
 void Task();
 void Pause();
@@ -35,7 +36,14 @@ void main ()
 	printf("The test is repeated %d times and the avarage time is displayed.\n", taskRunCount);
 	printf("\n");
 
-	Kinoko *kinoko = new Kinoko();
+    //----------
+    HMODULE dll = LoadLibrary(L"..\\Debug\\CppKinoko.dll");
+
+    typedef  Kinoko* (*CreateKinoko)(void);
+    CreateKinoko createKinoko = (CreateKinoko)GetProcAddress(dll, "createKinoko");
+    //----------
+
+	Kinoko *kinoko = createKinoko();//new Kinoko();
 	kinoko->SetTask(&Task);
 	kinoko->SetTaskRunCount(taskRunCount);
 	kinoko->beforeTaskRun = &Kinoko_BeforeTaskRun;
@@ -44,6 +52,10 @@ void main ()
 	
 	printf("Avarage time: %.2f milisec\n", kinoko->GetResult()->GetAverage());
 	Pause();
+
+    if(dll){
+        FreeLibrary(dll);
+    }
 }
 
 /*

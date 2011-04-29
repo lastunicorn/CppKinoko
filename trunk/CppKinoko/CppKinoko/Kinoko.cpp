@@ -23,6 +23,11 @@ Initializes a new instance of the Kinoko class.
 --------------------------------------------------------------------------------
 */
 Kinoko::Kinoko(void)
+    : taskRunCount(0)
+    , task(0)
+    , result(0)
+    , beforeTaskRun(0)
+    , afterTaskRun(0)
 {
 }
 
@@ -108,4 +113,11 @@ Every time the Run method is called, the old result is discarded.
 KinokoResult* Kinoko::GetResult()
 {
 	return result;
+}
+
+
+//--------------------------------------------------
+Kinoko* createKinoko(void){
+    #pragma comment(linker, "/EXPORT:"__FUNCTION__"="__FUNCDNAME__)
+    return new Kinoko();
 }
