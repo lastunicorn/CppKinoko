@@ -17,27 +17,54 @@
 #include <time.h>
 #include "Kinoko.h"
 
-
+/*
+--------------------------------------------------------------------------------
+Initializes a new instance of the Kinoko class.
+--------------------------------------------------------------------------------
+*/
 Kinoko::Kinoko(void)
 {
 }
 
+/*
+--------------------------------------------------------------------------------
+Releases the memory used by current instance of Kinoko class.
+--------------------------------------------------------------------------------
+*/
 Kinoko::~Kinoko(void)
 {
 	if (result != NULL)
 		delete result;
 }
 
+/*
+--------------------------------------------------------------------------------
+Gets or sets the number of times the task is run within the test. The task
+should be run multiple times to minimize the measurement errors.
+--------------------------------------------------------------------------------
+*/
 void Kinoko::SetTaskRunCount(int value)
 {
 	taskRunCount = value;
 }
 
+/*
+--------------------------------------------------------------------------------
+Sets the task that is tested by Kinoko.
+--------------------------------------------------------------------------------
+*/
 void Kinoko::SetTask(void (*task)())
 {
 	this->task = task;
 }
 
+/*
+--------------------------------------------------------------------------------
+Runs the task multiple times and measures the time intervals spent.
+After the test is finished, result is automatically calculated by calling the
+KinokoResult->Calculate method.
+--------------------------------------------------------------------------------
+*/
 void Kinoko::Run(void)
 {
 	KinokoResult *result = new KinokoResult(taskRunCount);
@@ -72,6 +99,12 @@ void Kinoko::Run(void)
 	this->result = result;
 }
 
+/*
+--------------------------------------------------------------------------------
+Gets the results of the test. It is null if no test was run.
+Every time the Run method is called, the old result is discarded.
+--------------------------------------------------------------------------------
+*/
 KinokoResult* Kinoko::GetResult()
 {
 	return result;

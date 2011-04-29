@@ -24,6 +24,12 @@
 
 #include "KinokoResult.h"
 
+/*
+--------------------------------------------------------------------------------
+Measures the time necessary for a task to run. The task is run multiple times
+and an average is calculated.
+--------------------------------------------------------------------------------
+*/
 class CPPKINOKO_API Kinoko
 {
 private:
