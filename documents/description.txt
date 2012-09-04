@@ -1,0 +1,23 @@
+CppKinoko v1.0
+==============
+
+There are two projects in the solution at the moment:
+	- CppKinoko - the framework
+	- CppKinoko.Example - an example of how the framework can be used.
+
+
+1) Project: CppKinoko
+---------------------
+Contains the two classes:
+	- Kinoko - This class does the measurement and returns the calculated average.
+	- KinokoResult - Stores the results of the measurements and calculates the average.
+
+
+2) Project CppKinoko.Example
+----------------------------
+It is a console application that instanciates the Kinoko class, gives it a function to measure and displays the results.
+
+
+3) Future features
+------------------
+	- Create a console application that can take as parameter a dll and a function name and measure it.
